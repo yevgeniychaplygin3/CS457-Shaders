@@ -410,24 +410,6 @@ Display( )
 	T0 = 0.5f;
 	D  = 0.1f;
 
-	//float A[] = { 0.,1.,10. }, P[] = { 0., .25 , 1. }, Tol[] = { 0.,0., .5 };
-	/*
-	Pattern->Use();
-	Pattern->SetUniformVariable( "uKa", 0.1f );
-	Pattern->SetUniformVariable( "uKd", 0.6f );
-	Pattern->SetUniformVariable( "uKs", 0.3f );
-	Pattern->SetUniformVariable( "uShininess", 8.f );
-
-	Pattern->SetUniformVariable( "uS0", S0);
-	Pattern->SetUniformVariable( "uT0", T0 );
-	Pattern->SetUniformVariable( "uD", D*(float)(.5+.5*sin(2.*M_PI*Time)) );
-	Pattern->SetUniformVariable( "uTime",  Time );
-
-	glCallList( SphereList );
-
-	// draw the current object:
-
-	Pattern->Use( 0 );*/
 	
 
 	int Polar = 10; // = ???
