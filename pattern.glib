@@ -1,0 +1,14 @@
+##OpenGL GLIB
+
+Perspective 90
+LookAt 0 0 2  0 0 0  0 1 0
+
+
+Vertex   stripes.vert
+Fragment stripes.frag
+Program  Hyper					\
+	uA	<0. 1. 10.>				\
+	uP	<0. 0.25 1.>				\
+	uTol <0. 0. 0.5>				
+Color 1 .5 0
+Sphere 1 50 50
