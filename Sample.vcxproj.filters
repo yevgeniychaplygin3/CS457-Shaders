@@ -23,16 +23,25 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="stripes.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="stripes.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="oval.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="oval.frag">
+      <Filter>Source Files</Filter>
+    </None>
     <None Include="pattern.frag">
       <Filter>Source Files</Filter>
     </None>
     <None Include="pattern.vert">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="stripes.vert">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="stripes.frag">
+    <None Include="oval.glib">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

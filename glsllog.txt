@@ -1,4 +1,5 @@
 
-ERROR: 0:26: 'vec3' : syntax error syntax error
+ERROR: 0:94: 'theColor' : undeclared identifier 
+ERROR: 0:95: 'constructor' : not enough data provided for construction 
 
 
