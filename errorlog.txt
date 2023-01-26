@@ -1,4 +1,5 @@
 
-ERROR: 0:68: 'n' : undeclared identifier 
+FLEX: Unknown char )
+ERROR: 0:124: ')' : syntax error syntax error
 
 

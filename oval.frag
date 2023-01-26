@@ -1,7 +1,7 @@
 #version 330 compatibility
 
 
-uniform float uAr, uBr, uD, uTol, uNoiseFreq, uNoiseAmp;
+uniform float uAd, uBd, uTol, uNoiseFreq, uNoiseAmp, uAlpha;
 
 uniform sampler2D Noise2;
 
@@ -12,31 +12,34 @@ in  vec3  vE;			// vector from point to eye
 
 in vec3 vMCposition;
 
-const vec3 WHITE = vec3( 1., 1., 1. ); 
 
 void 
 main()
 {
+	
 
 	vec3 Normal    = normalize(vN);
 	vec3 Light     = normalize(vL);
 	vec3 Eye       = normalize(vE);
 
 	vec3 SpecularColor = vec3( 1., 1., 1. );
-	vec3 myColor = vec3(1.0, 0.5, 0.0 );
+	vec3 myColor = vec3(1.0, 0., 0. );
 
-	//float Diam = .1f;
-	int numins = int(vST.s/uD);
-	int numint = int(vST.t/uD);
 
-	float R = uD/2;
-	float sc = float(numins) * uD + R;
-	float tc = float(numint) * uD + R;
+	float Ar = uAd / 2;
+	float Br = uBd / 2;
+
+	int numInS = int(vST.s/uAd);
+	int numInT = int(vST.t/uBd);
+
+	float sc = float(numInS) * uAd + Ar;
+	float tc = float(numInT) * uBd + Br;
+
+	float ds = vST.s - sc;                   // wrt ellipse center
+	float dt = vST.t - tc;                   // wrt ellipse center
 
 	float ss = vST.s;
 	float t = vST.t;
-
-
 
 
 	//vec4 noisev = texture2D (Noise2, uNoiseFreq * vMCposition); //using x y z
@@ -47,34 +50,36 @@ main()
 	noise = noise - 2.; // -1 to 1
 	noise  *= uNoiseAmp;
 
-	
 
+	//float result = (pow((ss-sc),2)/ pow(uAr,2)) + (pow((t-tc),2)/ pow(uBr,2));
+	float s_Squared = (ss-sc) * (ss-sc);
+	float t_Squared = (t-tc) * (t-tc);
 
-	float result = (pow((ss-sc),2)/ pow(uAr,2)) + (pow((t-tc),2)/ pow(uBr,2));
+	float aR_Squared = (Ar) * (Ar);
+	float bR_Squared = (Br) * (Br);
 
-	if ( ( (pow((ss-sc),2)/ pow(uAr,2)) + (pow((t-tc),2)/ pow(uBr,2)) )    ==1)
-	{
-		//myColor = vec3(0.,0.,1.);
-	}      
+	float div1 = s_Squared / aR_Squared;
+	float div2 = t_Squared / bR_Squared;
 
+	float _sum = div1 + div2;
 
-
-	//float sc = float(numins) * uAr  +  R;
-	float ds = vST.s - sc;                   // wrt ellipse center
-	//float tc = float(numint) * uBr  +  R;
-	float dt = vST.t - tc;                   // wrt ellipse center
-	
 	float oldDist = sqrt( ds*ds + dt*dt );
 	float newDist = oldDist + noise;
 	float scale = newDist / oldDist;        // this could be < 1., = 1., or > 1.
 
 	ds *= scale;
 	dt *= scale;
-	ds /= R;
-	dt /= R;
+	ds /= Ar;
+	dt /= Br;
 	float d = ds*ds + dt * dt;
 	float smoothstepT = smoothstep(1 - uTol, 1 + uTol, d);
 
+
+
+
+
+
+	// LIGHTING-------------------------------------------------------------------------------
 	vec3 ambient = .1 * myColor;
 
 	float dott = max( dot(Normal,Light), 0. );       // only do diffuse if the light can see the point
@@ -89,10 +94,28 @@ main()
 
 	vec3 specular = .3 * s * SpecularColor.rgb;
 	//gl_FragColor = vec4( ambient + diffuse + specular,  1. );
+	myColor = vec3( ambient + diffuse + specular);
+	// -------------------------------------------------------------------------------
 	
-	//smoothstep 
-	//float smoothstepT = smoothstep(1. - uTol, 1. + uTol, result );
-	vec3 mixResult = mix(WHITE, myColor, smoothstepT);
-	gl_FragColor = vec4(mixResult, 1.);
+
+
+
+
+
+	// SMOOTHSTEP 
+
+	//float smoothstepT = smoothstep(1. - uTol, 1. + uTol, _sum);
+
+	
+
+	vec4 WHITE = vec4( 1., 1., 1., uAlpha); 
+	
+
+
+	
+	vec4 mixResult = mix( vec4(myColor,1.) ,WHITE, smoothstepT);
+
+
+	gl_FragColor = mixResult;
 	
 }
