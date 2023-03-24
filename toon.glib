@@ -1,0 +1,66 @@
+##OpenGL GLIB
+Perspective 90
+LookAt 0 0 2  0 0 0  0 1 0
+
+
+#CubeMap 6 nvposx.bmp nvnegx.bmp  nvposy.bmp nvnegy.bmp   #nvposz.bmp nvnegz.bmp
+
+
+Vertex   toon.vert
+Fragment toon.frag
+Program  Toon						\
+	uLightDirX	 <-10. 0 10.>			\
+	uLightDirY	 <-10. 5 10.>			\
+	uLightDirZ	 <-10. 0 10.>		\
+	uKa < -1.0 .1 5>			\
+	uKd < -1.0 .1 3.5>			\
+	uKs < -1.0 .1 1>			\
+	uShininess < -2.0 .1 100>		
+	
+
+
+#PushMatrix
+Rotate -15   1 0 0
+Obj bunny.obj
+
+Vertex   empty.vert
+Fragment empty.frag
+Program  Teapot		\
+	uKa < -1.0 .1 5>			\
+	uKd < -1.0 .1 3.5>		\
+	uKs < -1.0 .1 1>			\
+	uShininess < -1.0 .1 1>			\
+	uLightDirX < -10.0 .1 10>		\
+ 	uLightDirY < -10.0 .1 10>		\
+	uLightDirZ < -10.0 .1 10>	
+
+
+Obj teapot.obj
+
+#PopMatrix
+
+
+#Vertex		texture.vert
+#Fragment	texture.frag
+#Program Texture	TexUnit 6
+
+#Texture2D  6  nvposx.bmp
+#QuadYZ 5. 5. 10 10
+
+#Texture2D  6  nvnegx.bmp
+#QuadYZ -5. 5. 10
+
+#Texture2D  6  nvposy.bmp
+#QuadXZ 5. 5. 10 10
+
+#Texture2D  6  nvnegy.bmp
+#QuadXZ -5. 5. 10 10
+
+#Texture2D  6  nvposz.bmp
+#QuadXY 5. 5. 10 10
+
+#Texture2D  6  nvnegz.bmp
+#QuadXY -5. 5. 10 10
+
+
+

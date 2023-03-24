@@ -1,0 +1,12 @@
+##OpenGL GLIB
+
+Perspective 90
+LookAt 0 0 2  0 0 0  0 1 0
+
+Vertex   morph.vert
+Fragment morph.frag
+
+Program  Morph	\
+	Blend <-1. 0. 10.>	
+Color 1. .9 0
+Obj bunny.obj

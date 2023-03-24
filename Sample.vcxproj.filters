@@ -44,5 +44,55 @@
     <None Include="oval.glib">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="oval.geom">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="pixel.vert" />
+    <None Include="pixel.frag" />
+    <None Include="bump.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="magic.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="pleatscube.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="save.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="silh.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="swirl.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="texture.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="toon.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="bump.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="magic.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="pleatscube.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="silh.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="swirl.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="texture.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="toon.vert">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

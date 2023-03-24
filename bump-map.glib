@@ -1,0 +1,18 @@
+##OpenGL GLIB
+
+Perspective 90
+LookAt 0 0 2  0 0 0  0 1 0
+
+
+Vertex   bump.vert
+Fragment bump.frag
+Program  Pleats	\
+	uK <.001 .1 .5>		\
+	uP <.001 .1 .5>		\
+	uNoiseFreq <0. 1. 10.> \
+	uNoiseAmp <0. 1. 10.>	\
+	uKa <0. 0.1 1.0.>		\
+     	uKd <0. 0.6 1.0.>		\
+	uKs <0. 0.3 1.0.>		\
+	uShininess <1. 10. 100.>	
+QuadXY 0. 1. 128 128
