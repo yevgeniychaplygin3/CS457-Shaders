@@ -12,14 +12,6 @@ const float AMP = 0.2;
 const float PI = 3.14159265;
 const float W = 2.;
 
-out vec3 vColor;
-out float vX, vY;
-out float vLightIntensity;
-
-const vec3 LIGHTPOS = vec3(0.,0.,10.);
-
-
-
 void
 main( )
 { 
@@ -33,19 +25,4 @@ main( )
 	vE = vec3( 0., 0., 0. ) - ECposition.xyz;		// vector from the point
 							// to the eye position 
 	gl_Position = gl_ModelViewProjectionMatrix * vec4( vert, 1. );
-
-
-
-
-	vec3 tnorm = normalize(gl_NormalMatrix * gl_Normal);
-	vec3 ECPosition = (gl_ModelViewMatrix * gl_Vertex).xyz;
-	vLightIntensity = abs(dot(normalize(LIGHTPOS - ECPosition), tnorm));
-
-	vColor = vec3 (1,0,0); //gl_Color.rgb;
-	vec3 MCPosition = gl_Vertex.xyz;
-	vX = MCPosition.x;
-	vY = MCPosition.y;
-
-	// vX = vX + uAmp * sin(uFreq * vY); // gives the S curve stripes
-	//gl_Position - gl_ModelViewProjectionMatrix * gl_Vertex;
 }

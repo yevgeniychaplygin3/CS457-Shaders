@@ -233,6 +233,8 @@ float *	MulArray3( float, float [3] );
 
 // shader globals
 GLSLProgram* Hyper;
+GLSLProgram* Oval;
+GLuint TexName;
 
 // main program:
 
@@ -410,39 +412,49 @@ Display( )
 	T0 = 0.5f;
 	D  = 0.1f;
 
-	//float A[] = { 0.,1.,10. }, P[] = { 0., .25 , 1. }, Tol[] = { 0.,0., .5 };
-	/*
-	Pattern->Use();
-	Pattern->SetUniformVariable( "uKa", 0.1f );
-	Pattern->SetUniformVariable( "uKd", 0.6f );
-	Pattern->SetUniformVariable( "uKs", 0.3f );
-	Pattern->SetUniformVariable( "uShininess", 8.f );
-
-	Pattern->SetUniformVariable( "uS0", S0);
-	Pattern->SetUniformVariable( "uT0", T0 );
-	Pattern->SetUniformVariable( "uD", D*(float)(.5+.5*sin(2.*M_PI*Time)) );
-	Pattern->SetUniformVariable( "uTime",  Time );
-
-	glCallList( SphereList );
-
-	// draw the current object:
-
-	Pattern->Use( 0 );*/
 	
 
 	int Polar = 10; // = ???
 	float K = 2.5; // = ???
 
 
-
+	/*
 	Hyper->Use();
-	float A[] = { 1.f,7.f,10.f }, P[] = { 0.f, .16f , 1.f }, Tol[] = { 0.f,0.1f, .5f };
+	float A = 3.67f, P = .25f, Tol = 0.f;
 
 	Hyper->SetUniformVariable("uA", 3.67f);
 	Hyper->SetUniformVariable("uP", .25f);
 	Hyper->SetUniformVariable("uTol", 0.f);
 	glCallList(SphereList);
-	Hyper->UnUse();
+	Hyper->UnUse();*/
+
+
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_3D, TexName);
+
+
+	
+	float Ar = .05;
+	float Br = .06;
+	float D = .1;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	Oval->Use();
+	glCallList(SphereList);
+	Oval->SetUniformVariable("uAr", Ar);
+	Oval->SetUniformVariable("uBr", Br);
+	Oval->SetUniformVariable("uD", D);
+	Oval->SetUniformVariable("uTexUnit", 3);
+	Oval->UnUse();
+
+	
+	glDisable(GL_BLEND);
+
+	
+	
+
 	
 	glutSwapBuffers( );
 	glFlush( );
@@ -626,6 +638,29 @@ InitMenus( )
 // initialize the glut and OpenGL libraries:
 //	also setup display lists and callback functions
 
+unsigned char *
+ReadTexture3D(char* filename, int* width, int* height, int* depth)
+{
+	FILE* fp = fopen(filename, "rb");
+	if (fp == NULL) fprintf(stderr, "Cannot open %p in ReadTexture3D\n", fp); return NULL;
+	int s, t, p;
+	fread(&s, 4, 1, fp);
+	fread(&t, 4, 1, fp);
+	fread(&p, 4, 1, fp);
+	fprintf(stderr, "Texture size = %d x %d x %d\n", s, t, p);
+
+	*width = s;
+	*height = t;
+	*depth = p;
+
+	unsigned char* texture = new unsigned char[4 * s * t * p];
+
+	fread(texture, 4 * s * t * p, 1, fp);
+	fclose(fp);
+
+	return texture;
+}
+
 void
 InitGraphics( )
 {
@@ -692,6 +727,7 @@ InitGraphics( )
 
 	// init glew (a window must be open to do this):
 
+
 #ifdef WIN32
 	GLenum err = glewInit( );
 	if( err != GLEW_OK )
@@ -703,6 +739,31 @@ InitGraphics( )
 	fprintf( stderr, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
 #endif
 
+	
+
+	glGenTextures(1, &TexName);
+	int s, t, p;
+	unsigned char* texture = ReadTexture3D("noise3d.064.tex", &s, &t, &p);
+
+
+
+	glBindTexture(GL_TEXTURE_3D, TexName);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA8, s, t, p, 0, GL_RGBA,
+		GL_UNSIGNED_BYTE, texture);
+
+
+
+
+
+
+
+
+
 	Pattern = new GLSLProgram( );
 	bool valid = Pattern->Create( "pattern.vert",  "pattern.frag" );
 	if( ! valid )
@@ -711,7 +772,7 @@ InitGraphics( )
 	}
 	else
 	{
-		fprintf( stderr, "Shader created.\n" );
+		fprintf( stderr, "Pattern Shader created.\n" );
 	}
 	Pattern->SetVerbose( false );
 
@@ -724,11 +785,23 @@ InitGraphics( )
 	}
 	else
 	{
-		fprintf(stderr, "Shader created.\n");
+		fprintf(stderr, "Hyper Shader created.\n");
 	}
 
-	Pattern->SetVerbose(false);
+	Hyper->SetVerbose(false);
 
+	Oval = new GLSLProgram();
+	bool valid3 = Oval->Create("oval.vert", "oval.frag");
+	if (!valid3) {
+		fprintf(stderr, "error in Init Graphics when crating GLSLProgram");
+		exit(1);
+	}
+	else
+	{
+		fprintf(stderr, "Oval Shader created.\n");
+	}
+
+	Oval->SetVerbose(false);
 
 }
 

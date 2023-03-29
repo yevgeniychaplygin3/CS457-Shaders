@@ -1,0 +1,34 @@
+##OpenGL GLIB
+
+//Perspective 90
+LookAt 0 0 2  0 0 0  0 1 0
+
+Vertex   final.vert
+Geometry final.geom
+Fragment final.frag
+
+Program  Final	\
+	uLevel <0 2 5>	\
+	uChange  <-3. 0. 9.>	\
+	uUseST <true>		\
+			uS <0. .5 1.>		\
+			uDs <0. .2 1.>		\
+			uT <0. .5 1.>		\
+			uDt <0. .2 1.>		\
+			uX <-5. 0. 5.>		\
+			uDx <0. 3. 5.>		\
+			uY <-5. 0. 5.>		\
+			uDy <0. 3. 5.>		\
+			uZ <-5. 0. 5.>		\
+			uDz <0. 3. 5.>		\
+	Blend <0. 0. 10.>	\
+	uMove  <-3. 0. 130.>		\
+		uLightDirX	 <-10. 0 10.>			\
+		uLightDirY	 <-10. 5 10.>			\
+		uLightDirZ	 <-10. 0 10.>		\
+		uKa < -1.0 .1 5>			\
+		uKd < -1.0 .1 3.5>			\
+		uKs < -1.0 .1 1>			\
+		uShininess < -2.0 .1 100>		
+	
+Obj bunny.obj

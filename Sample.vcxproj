@@ -18,13 +18,13 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -134,10 +134,31 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bump.frag" />
+    <None Include="bump.vert" />
+    <None Include="magic.frag" />
+    <None Include="magic.vert" />
+    <None Include="oval.frag" />
+    <None Include="oval.geom" />
+    <None Include="oval.glib" />
+    <None Include="oval.vert" />
     <None Include="pattern.frag" />
     <None Include="pattern.vert" />
+    <None Include="pixel.frag" />
+    <None Include="pixel.vert" />
+    <None Include="pleatscube.frag" />
+    <None Include="pleatscube.vert" />
+    <None Include="save.frag" />
+    <None Include="silh.frag" />
+    <None Include="silh.vert" />
     <None Include="stripes.frag" />
     <None Include="stripes.vert" />
+    <None Include="swirl.frag" />
+    <None Include="swirl.vert" />
+    <None Include="texture.frag" />
+    <None Include="texture.vert" />
+    <None Include="toon.frag" />
+    <None Include="toon.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
