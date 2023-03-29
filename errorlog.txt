@@ -1,8 +1,0 @@
-
-ERROR: 0:91: '[' :  array index out of range '1' 1
-ERROR: 0:93: '[' :  array index out of range '1' 1
-ERROR: 0:97: '[' :  array index out of range '1' 1
-ERROR: 0:98: '[' :  array index out of range '1' 1
-ERROR: 0:99: '[' :  array index out of range '1' 1
-
-
